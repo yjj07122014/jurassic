@@ -984,6 +984,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:rgba(4,6,5,.9);backdrop-filter:blur(12px);
   opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;padding:20px;}
 .picker.open{opacity:1;visibility:visible;}
+#fusionPicker{z-index:180 !important;}
 .picker-inner{width:100%;max-width:400px;max-height:82vh;padding:22px 18px 18px;
   border-radius:20px;background:linear-gradient(165deg,rgba(34,44,36,.97),rgba(12,17,14,.99));
   border:1px solid var(--line2);transform:scale(.92);opacity:0;
@@ -1865,10 +1866,7 @@ document.addEventListener('pointerdown', e => {
 /* ============ 账号（含旧版本自动迁移） ============ */
 const Account = {
   key:'jp_accounts_v16', cur:'jp_current_v16',
-  // 旧版本键名（从新到旧排列，会依次尝试）
   legacyVersions: ['v15','v14','v13','v12'],
-
-  // ★ 自动迁移：新键为空时，从旧键搬运一次
   _migrate(){
     try{
       const hasNew = localStorage.getItem(this.key);
@@ -1888,7 +1886,6 @@ const Account = {
     }catch(e){ console.warn('迁移失败', e); }
     return false;
   },
-
   load(){ try { return JSON.parse(localStorage.getItem(this.key)) || {}; } catch(e){ return {}; } },
   save(accs){
     try { localStorage.setItem(this.key, JSON.stringify(accs)); return true; }
@@ -2781,6 +2778,9 @@ const CINE = [
   {t:'和一声来自亿年前的嘶吼。',c:'gold'},
   {t:'……',c:'dim'},
   {t:'他趴在泥滩上。',c:''},
+  {t:'共鸣之印撕开的时空裂缝并不稳定。',c:'gold'},
+  {t:'来自白垩纪的恐龙被卷入了侏罗纪的岩层。',c:''},
+  {t:'时间和纪元在这片大陆上变得模糊不清。',c:'dim'},
   {t:'空气湿热，含氧量高得让肺发烫。',c:''},
   {t:'远处是连绵的蕨类森林，头顶有翼龙掠过。',c:''},
   {t:'泥滩上有一串巨大的三趾脚印，比他的身体还大。',c:''},
@@ -4749,9 +4749,11 @@ const CHAPTERS = [
       '第五秒，蓝白色的光从琥珀内部炸开。',
       '<p class="whisper">——你听见的不是吼叫，是七千万年前的风。</p>'],
     battle: null},
-  {t:'第一章 · 泥滩上的三趾印', meta:'CHAPTER 01 · 白垩纪晚期',
+  {t:'第一章 · 泥滩上的三趾印', meta:'CHAPTER 01 · 侏罗纪 · 时空错乱',
     d:'湿热，含氧量高得让肺发烫。泥滩上有一串巨大的三趾脚印。',
     body:['他趴在泥滩上，河水漫过小臂。',
+      '<b class="hl">共鸣之印撕开的时空裂缝并不稳定。</b>',
+      '来自白垩纪的恐龙被卷入了侏罗纪的岩层。时间和纪元在这片大陆上变得模糊不清。',
       '左手掌心传来灼热——一道发光的纹路正在皮肤下浮现。',
       '<b class="hl">这就是共鸣之印。</b>'],
     battle: null},
